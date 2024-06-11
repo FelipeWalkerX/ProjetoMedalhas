@@ -15,5 +15,9 @@ typedef struct {
 
 void inserirMedalha(Medalha** medalhas, int* tamanho, Medalha novaMedalha);
 void listarMedalhas(Medalha* medalhas, int tamanho);
+void pesquisarMedalha(Medalha *medalhas, int tamanho);
+void alterarMedalha(Medalha *medalhas, int tamanho);
+void excluirMedalha(Medalha **medalhas, int *tamanho);
+
 
 #endif /* MEDALHA_H */
