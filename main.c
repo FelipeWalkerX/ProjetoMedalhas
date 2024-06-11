@@ -9,7 +9,7 @@ void exibirMenu() {
     printf("4. Alterar medalha\n");
     printf("5. Excluir medalha\n");
     printf("0. Sair\n");
-    printf("Escolha uma opção: ");
+    printf("Escolha uma opcao: ");
 }
 
 int main() {
@@ -17,12 +17,13 @@ int main() {
     int totalMedalhas = 0;
     const char *csvFilename = "medalhas.csv";
     const char *binFilename = "medalhas.bin";
+    
 
     // Carregar dados do arquivo binário, se existir
     carregarDadosBinario(&medalhas, &totalMedalhas, binFilename);
 
     // Carregar dados iniciais do arquivo CSV (descomentar se necessário)
-    // carregarDadosCSV(&medalhas, &totalMedalhas, csvFilename);
+    carregarDadosCSV(&medalhas, &totalMedalhas, csvFilename);
 
     // Exibir mensagem de boas-vindas
     printf("Bem-vindo ao sistema de gerenciamento de medalhas!\n");
@@ -34,15 +35,16 @@ int main() {
         switch (opcao) {
             case 1: {
                 Medalha novaMedalha;
-                printf("\nGenero: ");
+                printf("\nGenero (m/w): ");
                 scanf(" %c", &novaMedalha.genero);
                 printf("\nModalidade: ");
                 scanf("%s", novaMedalha.modalidade);
                 printf("\nCidade: ");
                 scanf("%s", novaMedalha.cidade);
+                setbuf(stdin, NULL);
                 printf("\nAno: ");
                 scanf("%d", &novaMedalha.ano);
-                printf("\nTipo de Medalha (G, B, S): ");
+                printf("\nTipo de Medalha (G/B/S): ");
                 scanf(" %c", &novaMedalha.tipoMedalha);
                 printf("\nNome do Atleta: ");
                 scanf("%s", novaMedalha.nomeAtleta);
@@ -66,15 +68,15 @@ int main() {
                 excluirMedalha(&medalhas, &totalMedalhas);
                 break;
             case 0:
-                printf("Saindo...\n");
+                printf("\n\n\nSaindo...\n");
                 salvarDadosBinario(medalhas, totalMedalhas, binFilename);
                 break;
             default:
-                printf("Opção inválida!\n");
+                printf("\n\n\nOpcao invalida!\n");
         }
     } while (opcao != 0);
 
-    
+    // Liberar memória
     free(medalhas);
 
     return 0;
