@@ -5,7 +5,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -std=c99
 
 # Nome do executável
-TARGET = medalhas
+TARGET = medalhas.exe
 
 # Arquivos fonte
 SRC = main.c medalha.c
@@ -15,16 +15,16 @@ HEADERS = medalha.h
 
 # Regra padrão para compilar o executável
 $(TARGET): $(SRC) $(HEADERS)
-    $(CC) $(CFLAGS) $(SRC) -o $(TARGET)
+	$(CC) $(CFLAGS) $(SRC) -o $(TARGET)
 
 # Regra para rodar o programa
 run: $(TARGET)
-    ./$(TARGET)
+	./$(TARGET)
 
 # Regra para limpar os arquivos gerados
 clean:
-    rm -f $(TARGET)
+	rm -f $(TARGET)
 
 # Regra para recompilar e rodar
 rebuild: clean $(TARGET)
-    ./$(TARGET)
+	./$(TARGET)
