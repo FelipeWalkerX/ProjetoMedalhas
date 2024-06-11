@@ -1,62 +1,81 @@
 #include <stdio.h>
-#include<stdlib.h>
+#include <stdlib.h>
 #include "medalha.h"
-#include "interface.h"
-#include<string.h>
+
+void exibirMenu() {
+    printf("1. Inserir medalha\n");
+    printf("2. Listar medalhas\n");
+    printf("3. Pesquisar medalha\n");
+    printf("4. Alterar medalha\n");
+    printf("5. Excluir medalha\n");
+    printf("0. Sair\n");
+    printf("Escolha uma opção: ");
+}
 
 int main() {
-    Medalha* medalhas = NULL;
-    int tamanho = 0;
+    Medalha *medalhas = NULL;
+    int totalMedalhas = 0;
+    const char *csvFilename = "medalhas.csv";
+    const char *binFilename = "medalhas.bin";
+
+    // Carregar dados do arquivo binário, se existir
+    carregarDadosBinario(&medalhas, &totalMedalhas, binFilename);
+
+    // Carregar dados iniciais do arquivo CSV (descomentar se necessário)
+    // carregarDadosCSV(&medalhas, &totalMedalhas, csvFilename);
+
+    // Exibir mensagem de boas-vindas
+    printf("Bem-vindo ao sistema de gerenciamento de medalhas!\n");
+
     int opcao;
-    
     do {
-        exibirMenuInicial();
-        printf("Escolha uma opção: ");
+        exibirMenu();
         scanf("%d", &opcao);
-        getchar(); // Limpar o buffer do stdin
-        
-        if (opcao == 1) {
-            Medalha novaMedalha;
-            novaMedalha.codigo = tamanho + 1; // Exemplo de código automático
-            
-            printf("Digite o gênero (M/F): ");
-            scanf(" %c", &novaMedalha.genero);
-            getchar();
-            
-            printf("Digite a modalidade: ");
-            fgets(novaMedalha.modalidade, sizeof(novaMedalha.modalidade), stdin);
-            novaMedalha.modalidade[strcspn(novaMedalha.modalidade, "\n")] = 0; // Remover o '\n'
-            
-            printf("Digite a cidade: ");
-            fgets(novaMedalha.cidade, sizeof(novaMedalha.cidade), stdin);
-            novaMedalha.cidade[strcspn(novaMedalha.cidade, "\n")] = 0; // Remover o '\n'
-            
-            printf("Digite o ano: ");
-            scanf("%d", &novaMedalha.ano);
-            getchar();
-            
-            printf("Digite o tipo de medalha (O/P/B): ");
-            scanf(" %c", &novaMedalha.tipo_medalha);
-            getchar();
-            
-            printf("Digite o nome do atleta: ");
-            fgets(novaMedalha.nome_atleta, sizeof(novaMedalha.nome_atleta), stdin);
-            novaMedalha.nome_atleta[strcspn(novaMedalha.nome_atleta, "\n")] = 0; // Remover o '\n'
-            
-            printf("Digite o país de origem: ");
-            fgets(novaMedalha.pais_origem, sizeof(novaMedalha.pais_origem), stdin);
-            novaMedalha.pais_origem[strcspn(novaMedalha.pais_origem, "\n")] = 0; // Remover o '\n'
-            
-            printf("Digite o resultado: ");
-            fgets(novaMedalha.resultado, sizeof(novaMedalha.resultado), stdin);
-            novaMedalha.resultado[strcspn(novaMedalha.resultado, "\n")] = 0; // Remover o '\n'
-            
-            inserirMedalha(&medalhas, &tamanho, novaMedalha);
-        } else if (opcao == 2) {
-            listarMedalhas(medalhas, tamanho);
+        switch (opcao) {
+            case 1: {
+                Medalha novaMedalha;
+                printf("\nGenero: ");
+                scanf(" %c", &novaMedalha.genero);
+                printf("\nModalidade: ");
+                scanf("%s", novaMedalha.modalidade);
+                printf("\nCidade: ");
+                scanf("%s", novaMedalha.cidade);
+                printf("\nAno: ");
+                scanf("%d", &novaMedalha.ano);
+                printf("\nTipo de Medalha (G, B, S): ");
+                scanf(" %c", &novaMedalha.tipoMedalha);
+                printf("\nNome do Atleta: ");
+                scanf("%s", novaMedalha.nomeAtleta);
+                printf("\nPais de Origem: ");
+                scanf("%s", novaMedalha.paisOrigem);
+                printf("\nResultado: ");
+                scanf("%s", novaMedalha.resultado);
+                inserirMedalha(&medalhas, &totalMedalhas, novaMedalha);
+                break;
+            }
+            case 2:
+                listarMedalhas(medalhas, totalMedalhas);
+                break;
+            case 3:
+                pesquisarMedalha(medalhas, totalMedalhas);
+                break;
+            case 4:
+                alterarMedalha(medalhas, totalMedalhas);
+                break;
+            case 5:
+                excluirMedalha(&medalhas, &totalMedalhas);
+                break;
+            case 0:
+                printf("Saindo...\n");
+                salvarDadosBinario(medalhas, totalMedalhas, binFilename);
+                break;
+            default:
+                printf("Opção inválida!\n");
         }
-    } while (opcao != 3);
+    } while (opcao != 0);
+
     
     free(medalhas);
+
     return 0;
 }
