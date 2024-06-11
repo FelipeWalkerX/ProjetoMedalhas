@@ -4,20 +4,22 @@
 typedef struct {
     int codigo;
     char genero;
-    char modalidade[100];
-    char cidade[100];
+    char modalidade[50];
+    char cidade[50];
     int ano;
-    char tipo_medalha;
-    char nome_atleta[100];
-    char pais_origem[100];
-    char resultado[100];
-}Medalha;
+    char tipoMedalha;
+    char nomeAtleta[50];
+    char paisOrigem[50];
+    char resultado[50];
+} Medalha;
 
-void inserirMedalha(Medalha** medalhas, int* tamanho, Medalha novaMedalha);
-void listarMedalhas(Medalha* medalhas, int tamanho);
-void pesquisarMedalha(Medalha *medalhas, int tamanho);
-void alterarMedalha(Medalha *medalhas, int tamanho);
-void excluirMedalha(Medalha **medalhas, int *tamanho);
+void inserirMedalha(Medalha **medalhas, int *total, Medalha novaMedalha);
+void listarMedalhas(Medalha *medalhas, int tamanho);
+void carregarDadosCSV(Medalha **medalhas, int *total, const char *filename);
+void salvarDadosBinario(Medalha *medalhas, int total, const char *filename);
+void carregarDadosBinario(Medalha **medalhas, int *total, const char *filename);
+void pesquisarMedalha(Medalha *medalhas, int total); // Protótipo adicionado
+void alterarMedalha(Medalha *medalhas, int total); // Protótipo adicionado
+void excluirMedalha(Medalha **medalhas, int *total); // Protótipo adicionado
 
-
-#endif /* MEDALHA_H */
+#endif // MEDALHA_H
