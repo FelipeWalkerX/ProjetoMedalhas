@@ -1,22 +1,30 @@
-
+# Nome do compilador
 CC = gcc
-CFLAGS = -Wall -Wextra -g
-OBJ = main.o interface.o medalha.o
-EXEC = programa
 
-all: $(EXEC)
+# Flags do compilador
+CFLAGS = -Wall -Wextra -std=c99
 
-$(EXEC): $(OBJ)
-    $(CC) $(CFLAGS) -o $(EXEC) $(OBJ)
+# Nome do executável
+TARGET = medalhas
 
-main.o: main.c interface.h medalha.h
-    $(CC) $(CFLAGS) -c main.c
+# Arquivos fonte
+SRC = main.c medalha.c
 
-interface.o: interface.c interface.h
-    $(CC) $(CFLAGS) -c interface.c
+# Arquivos de cabeçalho
+HEADERS = medalha.h
 
-medalha.o: medalha.c medalha.h
-    $(CC) $(CFLAGS) -c medalha.c
+# Regra padrão para compilar o executável
+$(TARGET): $(SRC) $(HEADERS)
+    $(CC) $(CFLAGS) $(SRC) -o $(TARGET)
 
+# Regra para rodar o programa
+run: $(TARGET)
+    ./$(TARGET)
+
+# Regra para limpar os arquivos gerados
 clean:
-    rm -f *.o $(EXEC)
+    rm -f $(TARGET)
+
+# Regra para recompilar e rodar
+rebuild: clean $(TARGET)
+    ./$(TARGET)
