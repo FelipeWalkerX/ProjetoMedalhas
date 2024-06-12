@@ -19,10 +19,10 @@ int main() {
     const char *binFilename = "medalhas.bin";
     
 
-    // Carregar dados do arquivo binário, se existir
+    // Carregar arquivo binário
     carregarDadosBinario(&medalhas, &totalMedalhas, binFilename);
 
-    // Carregar dados iniciais do arquivo CSV (descomentar se necessário)
+    // Carregar arquivo csv
     carregarDadosCSV(&medalhas, &totalMedalhas, csvFilename);
 
     // Exibir mensagem de boas-vindas
