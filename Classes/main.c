@@ -69,7 +69,11 @@ int main() {
                 fflush(stdin);
 
                 inserirMedalha(&medalhas, &totalMedalhas, novaMedalha);
-                tocarMelodia();
+                
+                if (novaMedalha.tipoMedalha == 'G' || novaMedalha.tipoMedalha == 'g') {
+                    tocarMelodia();
+                }
+
                 break;
             }
             case 2:
